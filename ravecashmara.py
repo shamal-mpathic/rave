@@ -1,16 +1,3 @@
-"""
-Cashmara Countdown
-==================
-A live countdown to Cashmara's set at System Override — the Seattle Tech Week
-rave at Q Nightclub. Doors at 7, Cashmara on the decks at 8. The room goes
-dark and the lights come up, so the whole app is built around a floor lit
-from below.
-
-Run it with:
-    pip install -r requirements.txt
-    streamlit run app.py
-"""
-
 from datetime import datetime, time as dtime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
@@ -277,7 +264,7 @@ HERO = r"""
     <div class="content">
       <div class="eyebrow">__NAME__ ON THE DECKS,  __DATE_LONG__</div>
       <h1 class="title"><em>System Override</em><em>Seattle Tech Week Rave</em></h1>
-      <p class="loc">The night the tech community trades laptops for lasers. Going full Y2K.</p>
+      <p class="loc">The tech community trades laptops for lasers. Y2K.</p>
 
       <div class="count">
         <div class="hours" id="hours">—</div>
@@ -327,12 +314,12 @@ HERO = r"""
       <div class="desc">Free drink tickets until __DRINKS_T__.</div></div>
     <div class="act s" data-ts="__SET_MS__" data-until="__SET_END_MS__">
       <div class="nm">__NAME__</div><div class="at">__SET_T__<small>__SET_AP__</small></div>
-      <div class="desc">__SET_LEN__ minutes, with a light show built by local artists.</div></div>
+      <div class="desc">Cashmara reps mpathic</div></div>
   </div>
 
   <div class="venue">__VENUE__ &mdash; __ADDRESS__</div>
 
-  <a class="rsvp" href="__EVENT_URL__" target="_blank" rel="noopener">RSVP on Luma <span>&rarr;</span></a>
+  <a class="rsvp" href="__EVENT_URL__" target="_blank" rel="noopener">RSVP & Details on Luma <span>&rarr;</span></a>
 </div>
 
 <script>
