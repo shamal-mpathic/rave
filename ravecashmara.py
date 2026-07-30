@@ -1,14 +1,6 @@
 """
 Cashmara Countdown
-==================
-A live countdown to Cashmara's set at System Override — the Seattle Tech Week
-rave at Q Nightclub. Doors at 7, Cashmara on the decks at 8. The room goes
-dark and the lights come up, so the whole app is built around a floor lit
-from below.
 
-Run it with:
-    pip install -r requirements.txt
-    streamlit run app.py
 """
 
 from datetime import datetime, time as dtime, timedelta, timezone
@@ -23,7 +15,7 @@ st.set_page_config(
     page_title="Cashmara Countdown",
     page_icon="💿",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
 # Brand palette (mpathic)
@@ -45,10 +37,10 @@ st.markdown(
     .stApp {{ background:{LIGHT_GRAY}; }}
     #MainMenu, header, footer {{ visibility:hidden; }}
     .block-container {{ padding-top:1.1rem; padding-bottom:2rem; max-width:1120px; }}
-    /* To hide the settings sidebar for a clean shared link, uncomment these two:
+    /* Hide the settings sidebar entirely (and its open arrow) for a clean shared link.
+       To re-enable the controls, delete these two rules. */
     section[data-testid="stSidebar"] {{ display:none !important; }}
     [data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"] {{ display:none !important; }}
-    */
     section[data-testid="stSidebar"] {{ background:#fff; border-right:3px solid {MAGENTA}; }}
     section[data-testid="stSidebar"] * {{ font-family:'Rubik',sans-serif; }}
     .sb-title {{ font-weight:800; font-size:1.1rem; color:{MAGENTA_D}; margin:0 0 .15rem; }}
@@ -118,10 +110,6 @@ if onstage < doors:  # a set that spills past midnight
     onstage += timedelta(days=1)
 set_end = onstage + timedelta(minutes=set_length)
 drinks_end = doors + timedelta(hours=2)
-public_doors = datetime.combine(event_date, dtime(22, 0), tzinfo=tz)
-if public_doors < doors:
-    public_doors += timedelta(days=1)
-
 name = esc(headliner.strip()) or "Cashmara"
 
 with st.sidebar:
@@ -246,7 +234,7 @@ HERO = r"""
     font-size:clamp(.62rem,1.5vw,.72rem); }
   .place .ln{ flex:1; height:1px; background:#e2dde6; }
 
-  .night{ display:grid; grid-template-columns:repeat(3,1fr);
+  .night{ display:grid; grid-template-columns:repeat(2,1fr);
     border:1px solid #ece8ef; border-radius:16px; overflow:hidden; background:#fff; }
   @media(max-width:640px){ .night{ grid-template-columns:1fr; } }
   .act{ padding:22px 24px; border-left:1px solid #ece8ef; transition:background .25s; }
@@ -254,7 +242,7 @@ HERO = r"""
   @media(max-width:640px){ .act{ border-left:0; border-top:1px solid #ece8ef; }
     .act:first-child{ border-top:0; } }
   .act .nm{ font-weight:800; text-transform:uppercase; letter-spacing:.1em; font-size:.74rem; }
-  .act.d .nm{ color:var(--cy-d); } .act.s .nm{ color:var(--mag); } .act.p .nm{ color:var(--yel-d); }
+  .act.d .nm{ color:var(--cy-d); } .act.s .nm{ color:var(--mag); }
   .act .at{ font-weight:900; font-size:2rem; color:var(--ink); line-height:1; margin-top:6px; }
   .act .at small{ font-size:.92rem; font-weight:600; color:#9a93a1; margin-left:4px; }
   .act .desc{ color:#6e6776; font-size:.86rem; line-height:1.45; margin-top:9px; }
@@ -263,21 +251,20 @@ HERO = r"""
   .act.now{ background:linear-gradient(180deg, rgba(255,0,193,.09), rgba(255,0,193,.02)); }
   .act.now .nm::after{ content:" · on now"; color:var(--mag); }
 
-  .lineup{ display:flex; flex-wrap:wrap; gap:7px; margin-top:18px; }
-  .dj{ font-size:.78rem; font-weight:500; color:#7a7280; background:#fff;
-    border:1px solid #ece8ef; border-radius:999px; padding:6px 13px; }
-  .dj.hero{ color:#fff; font-weight:700; background:var(--mag); border-color:var(--mag); }
+  .bill{ display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-top:24px; }
+  .bill-lab{ color:#a59eac; font-weight:600; text-transform:uppercase;
+    letter-spacing:.18em; font-size:.66rem; white-space:nowrap; }
+  .bill-names{ color:#4a444f; font-weight:500; line-height:1.5;
+    font-size:clamp(.95rem,2.4vw,1.12rem); }
 
-  .cta{ display:block; margin-top:22px; padding:16px; text-align:center;
-    border-radius:14px; text-decoration:none; background:var(--mag); color:#fff;
-    font-weight:800; letter-spacing:.06em; font-size:.95rem;
-    box-shadow:0 10px 24px rgba(255,0,193,.28); transition:transform .2s, background .2s; }
-  .cta:hover{ background:var(--mag-d); transform:translateY(-2px); }
-  .cta:focus-visible{ outline:3px solid var(--cy-d); outline-offset:3px; }
+  .rsvp{ display:inline-flex; align-items:center; gap:9px; margin-top:26px;
+    color:var(--mag); font-weight:800; font-size:1rem; text-decoration:none;
+    border-bottom:2px solid var(--mag); padding-bottom:3px;
+    transition:gap .2s, color .2s, border-color .2s; }
+  .rsvp:hover{ gap:15px; color:var(--mag-d); border-color:var(--mag-d); }
+  .rsvp:focus-visible{ outline:3px solid var(--cy-d); outline-offset:4px; }
 
-  .foot{ margin-top:20px; padding-left:2px; display:flex; justify-content:space-between;
-    gap:12px; flex-wrap:wrap; }
-  .fine{ color:#8d8794; font-size:.78rem; line-height:1.5; max-width:56ch; }
+  .foot{ margin-top:26px; padding-left:2px; }
   .credit{ color:#a59eac; font-weight:500; letter-spacing:.04em; font-size:.78rem; }
 
   @media (prefers-reduced-motion:reduce){
@@ -341,22 +328,20 @@ HERO = r"""
   <div class="night">
     <div class="act d" data-ts="__DOORS_MS__" data-until="__SET_MS__">
       <div class="nm">Doors</div><div class="at">__DOORS_T__<small>__DOORS_AP__</small></div>
-      <div class="desc">Free drink tickets for the first two hours, until __DRINKS_T__. Come as you are, straight from your last panel.</div></div>
+      <div class="desc">Free drink tickets until __DRINKS_T__.</div></div>
     <div class="act s" data-ts="__SET_MS__" data-until="__SET_END_MS__">
       <div class="nm">__NAME__</div><div class="at">__SET_T__<small>__SET_AP__</small></div>
-      <div class="desc">__SET_LEN__ minutes on the decks, with a custom light show built by local artists.</div></div>
-    <div class="act p" data-ts="__PUBLIC_MS__" data-until="">
-      <div class="nm">Open doors</div><div class="at">__PUBLIC_T__<small>__PUBLIC_AP__</small></div>
-      <div class="desc">The RSVP list closes and the room opens to the public. Every guest needs their own ticket.</div></div>
+      <div class="desc">__SET_LEN__ minutes, with a light show built by local artists.</div></div>
   </div>
 
-  <div class="lineup">__LINEUP__</div>
+  <div class="bill">
+    <span class="bill-lab">Also playing</span>
+    <p class="bill-names">__LINEUP__</p>
+  </div>
 
-  <a class="cta" href="__EVENT_URL__" target="_blank" rel="noopener">RSVP on Luma</a>
+  <a class="rsvp" href="__EVENT_URL__" target="_blank" rel="noopener">RSVP on Luma <span>&rarr;</span></a>
 
   <div class="foot">
-    <span class="fine">Hosted by SVB, Fenwick, Fuel Talent, mpathic and Soundry AI.
-      PLURR code of conduct — peace, love, unity, respect, responsibility.</span>
     <span class="credit">#shamwowcreations</span>
   </div>
 </div>
@@ -443,21 +428,16 @@ HERO = r"""
 
 doors_t, doors_ap = hour_only(doors)
 set_t, set_ap = hour_only(onstage)
-public_t, public_ap = hour_only(public_doors)
 
-lineup_html = "".join(
-    f'<span class="dj{" hero" if dj == "Cashmara" else ""}">{dj}</span>' for dj in LINEUP
-)
+lineup_html = " · ".join(dj for dj in LINEUP if dj != "Cashmara")
 
 for token, value in {
     "__DOORS_MS__": str(ms(doors)),
     "__SET_MS__": str(ms(onstage)),
     "__SET_END_MS__": str(ms(set_end)),
-    "__PUBLIC_MS__": str(ms(public_doors)),
     "__DATE_LONG__": long_date(onstage).upper(),
     "__DOORS_T__": doors_t, "__DOORS_AP__": doors_ap,
     "__SET_T__": set_t, "__SET_AP__": set_ap,
-    "__PUBLIC_T__": public_t, "__PUBLIC_AP__": public_ap,
     "__DRINKS_T__": clock12(drinks_end),
     "__SET_LEN__": str(set_length),
     "__LINEUP__": lineup_html,
@@ -473,4 +453,4 @@ if hasattr(st, "iframe"):  # Streamlit >= 1.59
 else:
     import streamlit.components.v1 as components
 
-    components.html(HERO, height=1240, scrolling=True)
+    components.html(HERO, height=1160, scrolling=True)
