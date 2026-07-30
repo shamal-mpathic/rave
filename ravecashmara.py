@@ -314,7 +314,7 @@ HERO = r"""
       <div class="desc">Free drink tickets until __DRINKS_T__.</div></div>
     <div class="act s" data-ts="__SET_MS__" data-until="__SET_END_MS__">
       <div class="nm">__NAME__</div><div class="at">__SET_T__<small>__SET_AP__</small></div>
-      <div class="desc">Cashmara reps mpathic</div></div>
+      <div class="desc">Cashmara reps mpathic.</div></div>
   </div>
 
   <div class="venue">__VENUE__ &mdash; __ADDRESS__</div>
