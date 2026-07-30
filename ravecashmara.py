@@ -27,7 +27,6 @@ PURPLE, LIGHT_GRAY = "#6700a9", "#F9F8F8"
 EVENT_URL = "https://luma.com/jxbrvcvo"
 VENUE = "Q Nightclub"
 ADDRESS = "1426 Broadway, Seattle"
-LINEUP = ["Kirby", "Daniel Sahn", "Shep", "Siyan", "Quoth the Raver", "Cashmara", "Latinum"]
 
 st.markdown(
     f"""
@@ -229,43 +228,29 @@ HERO = r"""
   .stage.live .booth{ animation-duration:.7s; }
 
   /* ---------- BELOW THE FOLD ---------- */
-  .place{ display:flex; align-items:center; gap:14px; margin:26px 2px 4px;
-    color:#7a7280; font-weight:600; letter-spacing:.18em; text-transform:uppercase;
-    font-size:clamp(.62rem,1.5vw,.72rem); }
-  .place .ln{ flex:1; height:1px; background:#e2dde6; }
+  .venue{ margin:22px 2px 0; color:#7a7280; font-weight:600; letter-spacing:.18em;
+    text-transform:uppercase; font-size:clamp(.62rem,1.5vw,.72rem); }
 
   .night{ display:grid; grid-template-columns:repeat(2,1fr);
-    border:1px solid #ece8ef; border-radius:16px; overflow:hidden; background:#fff; }
+    border-radius:16px; overflow:hidden; background:#fff; }
   @media(max-width:640px){ .night{ grid-template-columns:1fr; } }
-  .act{ padding:22px 24px; border-left:1px solid #ece8ef; transition:background .25s; }
-  .act:first-child{ border-left:0; }
-  @media(max-width:640px){ .act{ border-left:0; border-top:1px solid #ece8ef; }
-    .act:first-child{ border-top:0; } }
+  .act{ padding:22px 24px; transition:background .25s; }
   .act .nm{ font-weight:800; text-transform:uppercase; letter-spacing:.1em; font-size:.74rem; }
   .act.d .nm{ color:var(--cy-d); } .act.s .nm{ color:var(--mag); }
   .act .at{ font-weight:900; font-size:2rem; color:var(--ink); line-height:1; margin-top:6px; }
   .act .at small{ font-size:.92rem; font-weight:600; color:#9a93a1; margin-left:4px; }
   .act .desc{ color:#6e6776; font-size:.86rem; line-height:1.45; margin-top:9px; }
-  .act.done{ background:#fbfafc; }
   .act.done .at, .act.done .desc, .act.done .nm{ opacity:.42; }
   .act.now{ background:linear-gradient(180deg, rgba(255,0,193,.09), rgba(255,0,193,.02)); }
   .act.now .nm::after{ content:" · on now"; color:var(--mag); }
 
-  .bill{ display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-top:24px; }
-  .bill-lab{ color:#a59eac; font-weight:600; text-transform:uppercase;
-    letter-spacing:.18em; font-size:.66rem; white-space:nowrap; }
-  .bill-names{ color:#4a444f; font-weight:500; line-height:1.5;
-    font-size:clamp(.95rem,2.4vw,1.12rem); }
-
-  .rsvp{ display:inline-flex; align-items:center; gap:9px; margin-top:26px;
+  .rsvp{ display:inline-flex; align-items:center; gap:9px; margin-top:18px;
     color:var(--mag); font-weight:800; font-size:1rem; text-decoration:none;
     border-bottom:2px solid var(--mag); padding-bottom:3px;
     transition:gap .2s, color .2s, border-color .2s; }
   .rsvp:hover{ gap:15px; color:var(--mag-d); border-color:var(--mag-d); }
   .rsvp:focus-visible{ outline:3px solid var(--cy-d); outline-offset:4px; }
 
-  .foot{ margin-top:26px; padding-left:2px; }
-  .credit{ color:#a59eac; font-weight:500; letter-spacing:.04em; font-size:.78rem; }
 
   @media (prefers-reduced-motion:reduce){
     .bar,.booth{ animation:none !important; }
@@ -283,7 +268,7 @@ HERO = r"""
     <div class="content">
       <div class="eyebrow">__NAME__ ON THE DECKS,  __DATE_LONG__</div>
       <h1 class="title"><em>System Override</em><em>Seattle Tech Week Rave</em></h1>
-      <p class="loc">The night the tech community trades laptops for lasers. Going full Y2K.</p>
+      <p class="loc">The tech community trades laptops for lasers. Y2K.</p>
 
       <div class="count">
         <div class="hours" id="hours">—</div>
@@ -302,6 +287,10 @@ HERO = r"""
       <g fill="none" stroke="#0d0118" stroke-width="10" stroke-linecap="round">
         <path d="M82 74 C70 80 62 89 57 101"/>
         <path d="M118 74 C130 80 138 89 143 101"/>
+      </g>
+      <g fill="#0d0118">
+        <path d="M86 28 C74 34 68 48 69 62 C69 68 71 72 75 73 C79 70 79 60 82 50 C82 40 84 32 86 28 Z"/>
+        <path d="M114 28 C126 34 132 48 131 62 C131 68 129 72 125 73 C121 70 121 60 118 50 C118 40 116 32 114 28 Z"/>
       </g>
       <g fill="#0d0118">
         <path d="M76 98 C76 70 87 50 100 50 C113 50 124 70 124 98 Z"/>
@@ -323,8 +312,6 @@ HERO = r"""
     <canvas id="confetti"></canvas>
   </div>
 
-  <div class="place"><span>__VENUE__</span><span class="ln"></span><span>__ADDRESS__ · 21+</span></div>
-
   <div class="night">
     <div class="act d" data-ts="__DOORS_MS__" data-until="__SET_MS__">
       <div class="nm">Doors</div><div class="at">__DOORS_T__<small>__DOORS_AP__</small></div>
@@ -334,16 +321,9 @@ HERO = r"""
       <div class="desc">__SET_LEN__ minutes, with a light show built by local artists.</div></div>
   </div>
 
-  <div class="bill">
-    <span class="bill-lab">Also playing</span>
-    <p class="bill-names">__LINEUP__</p>
-  </div>
+  <div class="venue">__VENUE__ &mdash; __ADDRESS__</div>
 
   <a class="rsvp" href="__EVENT_URL__" target="_blank" rel="noopener">RSVP on Luma <span>&rarr;</span></a>
-
-  <div class="foot">
-    <span class="credit">#shamwowcreations</span>
-  </div>
 </div>
 
 <script>
@@ -429,8 +409,6 @@ HERO = r"""
 doors_t, doors_ap = hour_only(doors)
 set_t, set_ap = hour_only(onstage)
 
-lineup_html = " · ".join(dj for dj in LINEUP if dj != "Cashmara")
-
 for token, value in {
     "__DOORS_MS__": str(ms(doors)),
     "__SET_MS__": str(ms(onstage)),
@@ -440,7 +418,6 @@ for token, value in {
     "__SET_T__": set_t, "__SET_AP__": set_ap,
     "__DRINKS_T__": clock12(drinks_end),
     "__SET_LEN__": str(set_length),
-    "__LINEUP__": lineup_html,
     "__VENUE__": VENUE,
     "__ADDRESS__": ADDRESS,
     "__EVENT_URL__": EVENT_URL,
