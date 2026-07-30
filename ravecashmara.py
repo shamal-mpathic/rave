@@ -268,7 +268,7 @@ HERO = r"""
 
       <div class="count">
         <div class="hours" id="hours">—</div>
-        <div class="hours-lab" id="bigword">hours until the set</div>
+        <div class="hours-lab" id="bigword">hours until Cashmara's set</div>
       </div>
 
       <div class="split">
