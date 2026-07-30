@@ -1,6 +1,14 @@
 """
 Cashmara Countdown
+==================
+A live countdown to Cashmara's set at System Override — the Seattle Tech Week
+rave at Q Nightclub. Doors at 7, Cashmara on the decks at 8. The room goes
+dark and the lights come up, so the whole app is built around a floor lit
+from below.
 
+Run it with:
+    pip install -r requirements.txt
+    streamlit run app.py
 """
 
 from datetime import datetime, time as dtime, timedelta, timezone
@@ -23,6 +31,7 @@ MAGENTA, MAGENTA_D = "#ff00c1", "#8f006b"
 YELLOW, YELLOW_D = "#FEDA00", "#f3ac02"
 CYAN, CYAN_D = "#67dedf", "#1d8587"
 PURPLE, LIGHT_GRAY = "#6700a9", "#F9F8F8"
+PAGE = "#0d0118"  # everything outside the stage
 
 EVENT_URL = "https://luma.com/jxbrvcvo"
 VENUE = "Q Nightclub"
@@ -33,7 +42,7 @@ st.markdown(
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&display=swap');
     html, body, [class*="css"], .stApp {{ font-family:'Rubik',sans-serif; }}
-    .stApp {{ background:{LIGHT_GRAY}; }}
+    .stApp {{ background:{PAGE}; }}
     #MainMenu, header, footer {{ visibility:hidden; }}
     .block-container {{ padding-top:1.1rem; padding-bottom:2rem; max-width:1120px; }}
     /* Hide the settings sidebar entirely (and its open arrow) for a clean shared link.
@@ -154,14 +163,14 @@ HERO = r"""
     --cy:#67dedf; --cy-d:#1d8587; --purple:#6700a9; --ink:#1a1620; --gray:#F9F8F8;
   }
   *{ box-sizing:border-box; margin:0; padding:0; }
-  body{ font-family:'Rubik',sans-serif; background:transparent; color:var(--ink); }
+  body{ font-family:'Rubik',sans-serif; background:transparent; color:#e9e5ee; }
   .wrap{ max-width:1040px; margin:0 auto; }
 
   /* ---------- HERO ---------- */
   .stage{
     position:relative; overflow:hidden; border-radius:20px;
     min-height:clamp(560px,70vh,690px);
-    box-shadow:0 24px 50px rgba(44,10,74,.22); isolation:isolate;
+    box-shadow:0 18px 46px rgba(255,0,193,.16); isolation:isolate;
   }
   .sky{ position:absolute; inset:0;
     background:linear-gradient(177deg,
@@ -228,18 +237,18 @@ HERO = r"""
   .stage.live .booth{ animation-duration:.7s; }
 
   /* ---------- BELOW THE FOLD ---------- */
-  .venue{ margin:22px 2px 0; color:#7a7280; font-weight:600; letter-spacing:.18em;
+  .venue{ margin:22px 2px 0; color:#8d8794; font-weight:600; letter-spacing:.18em;
     text-transform:uppercase; font-size:clamp(.62rem,1.5vw,.72rem); }
 
   .night{ display:grid; grid-template-columns:repeat(2,1fr);
-    border-radius:16px; overflow:hidden; background:#fff; }
+    border-radius:16px; overflow:hidden; background:transparent; }
   @media(max-width:640px){ .night{ grid-template-columns:1fr; } }
   .act{ padding:22px 24px; transition:background .25s; }
   .act .nm{ font-weight:800; text-transform:uppercase; letter-spacing:.1em; font-size:.74rem; }
-  .act.d .nm{ color:var(--cy-d); } .act.s .nm{ color:var(--mag); }
-  .act .at{ font-weight:900; font-size:2rem; color:var(--ink); line-height:1; margin-top:6px; }
-  .act .at small{ font-size:.92rem; font-weight:600; color:#9a93a1; margin-left:4px; }
-  .act .desc{ color:#6e6776; font-size:.86rem; line-height:1.45; margin-top:9px; }
+  .act.d .nm{ color:var(--cy); } .act.s .nm{ color:var(--mag); }
+  .act .at{ font-weight:900; font-size:2rem; color:#fff; line-height:1; margin-top:6px; }
+  .act .at small{ font-size:.92rem; font-weight:600; color:#8d8794; margin-left:4px; }
+  .act .desc{ color:#a49daf; font-size:.86rem; line-height:1.45; margin-top:9px; }
   .act.done .at, .act.done .desc, .act.done .nm{ opacity:.42; }
   .act.now{ background:linear-gradient(180deg, rgba(255,0,193,.09), rgba(255,0,193,.02)); }
   .act.now .nm::after{ content:" · on now"; color:var(--mag); }
@@ -268,7 +277,7 @@ HERO = r"""
     <div class="content">
       <div class="eyebrow">__NAME__ ON THE DECKS,  __DATE_LONG__</div>
       <h1 class="title"><em>System Override</em><em>Seattle Tech Week Rave</em></h1>
-      <p class="loc">The tech community trades laptops for lasers. Y2K.</p>
+      <p class="loc">The night the tech community trades laptops for lasers. Going full Y2K.</p>
 
       <div class="count">
         <div class="hours" id="hours">—</div>
@@ -289,11 +298,12 @@ HERO = r"""
         <path d="M118 74 C130 80 138 89 143 101"/>
       </g>
       <g fill="#0d0118">
-        <path d="M86 28 C74 34 68 48 69 62 C69 68 71 72 75 73 C79 70 79 60 82 50 C82 40 84 32 86 28 Z"/>
-        <path d="M114 28 C126 34 132 48 131 62 C131 68 129 72 125 73 C121 70 121 60 118 50 C118 40 116 32 114 28 Z"/>
+        <path d="M95 20 C85 23 78 33 77 45 C76 54 78 61 82 63 C87 63 91 62 95 60 L95 20 Z"/>
+        <path d="M105 20 C115 23 122 33 123 45 C124 54 122 61 118 63 C113 63 109 62 105 60 L105 20 Z"/>
       </g>
       <g fill="#0d0118">
         <path d="M76 98 C76 70 87 50 100 50 C113 50 124 70 124 98 Z"/>
+        <rect x="89" y="42" width="22" height="16" rx="5"/>
         <circle cx="100" cy="33" r="18"/>
         <rect x="24" y="96" width="152" height="30" rx="5"/>
       </g>
