@@ -311,7 +311,7 @@ HERO = r"""
   <div class="night">
     <div class="act d" data-ts="__DOORS_MS__" data-until="__SET_MS__">
       <div class="nm">Doors</div><div class="at">__DOORS_T__<small>__DOORS_AP__</small></div>
-      <div class="desc">Free drink tickets until __DRINKS_T__.</div></div>
+      <div class="desc">Free drink tickets.</div></div>
     <div class="act s" data-ts="__SET_MS__" data-until="__SET_END_MS__">
       <div class="nm">__NAME__</div><div class="at">__SET_T__<small>__SET_AP__</small></div>
       <div class="desc">Cashmara reps mpathic.</div></div>
