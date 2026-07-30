@@ -264,7 +264,7 @@ HERO = r"""
     <div class="content">
       <div class="eyebrow">__NAME__ ON THE DECKS,  __DATE_LONG__</div>
       <h1 class="title"><em>System Override</em><em>Seattle Tech Week Rave</em></h1>
-      <p class="loc">The tech community trades laptops for lasers. Y2K.</p>
+      <p class="loc">When mpathic trades our laptops for lasers. Y2K.</p>
 
       <div class="count">
         <div class="hours" id="hours">—</div>
